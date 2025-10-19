@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="public/css/index.css">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+      crossorigin="anonymous" referrerpolicy="no-referrer" />
+   <title>Document</title>
+</head>
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="public/css/index.css">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+      crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+   <!-- Google Fonts -->
+   <style>
+      @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600&display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;600&display=swap');
+
+      body {
+         font-family: "Quicksand", sans-serif;
+         background-color: #f3d2c1;
+         color: #000000;
+         margin: 0;
+         padding: 0;
+         line-height: 1.7;
+      }
+
+      .post h1 {
+         font-family: "Playfair Display", serif;
+         font-size: 2.5rem;
+         color: #3fd611;
+         margin-bottom: 20px;
+         text-align: center;
+      }
+
+      .post p {
+         font-family: "Quicksand", sans-serif;
+         font-size: 1.05rem;
+         margin-bottom: 15px;
+      }
+
+   </style>
+   <title>Document</title>
+</head>
+<body>
+   <div class="topbar">
+      <div class="wrapper target">
+         <div class="left">
+            <i class="fa-solid fa-heart"></i>
+            <i class="fa-regular fa-envelope"></i>
+         </div>
+         <div class="center">
+            <a href="/">My Everything</a>
+         </div>
+         <div class="right">
+            <span>
+               
+            </span>
+            <div class="searchEngine" id="searchEngine">
+               <input type="text" placeholder="daha güzeli bulunamadı!">
+               <i class="fa-solid fa-magnifying-glass" id="searchIcon"></i>
+            </div>
+         </div>
+      </div>
+   </div>
+   <header class="header target">
+      <img src="public/img/birbirimize baktigimiz.jpg" alt="background">
+
+
+
+      <!-- Google Fonts ekle -->
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;600;700&display=swap" rel="stylesheet">
+
+<style>
+.header h1 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 4rem; /* istediğin boyuta göre ayarlayabilirsin */
+    color: #ffffff;  /* kırmızı tonu */
+    text-align: center;
+    margin: 0;
+}
+
+.header h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    text-align: center;
+    color: #ffffff;
+    margin-top: 10px;
+}
+</style>
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Rastgele & Fade Müzik</title>
+<style>
+audio { display: none; }
+</style>
+</head>
+<body>
+
+<audio src="public/mp3/indigo night.mp3"></audio>
+<audio src="public/mp3/Raven.mp3"></audio>
+<audio src="public/mp3/yol gozumu dagliyor.mp3"></audio>
+<audio src="public/mp3/cek.mp3"></audio>
+<audio src="public/mp3/neyleyim istanbulu.mp3"></audio>,
+<audio src="public/mp3/exception.mp3"></audio>
+
+<script>
+(function(){
+  const audios = Array.from(document.querySelectorAll('audio'));
+  let started = false;
+  let currentIndex = Math.floor(Math.random() * audios.length);
+  let fadeDuration = 2000; // ms, fade süresi
+
+  function fade(audio, from, to, duration, callback) {
+    const stepTime = 50; // ms
+    const steps = duration / stepTime;
+    let currentStep = 0;
+    const delta = (to - from) / steps;
+    audio.volume = from;
+    const fadeInterval = setInterval(() => {
+      currentStep++;
+      audio.volume = Math.min(1, Math.max(0, audio.volume + delta));
+      if(currentStep >= steps){
+        clearInterval(fadeInterval);
+        if(callback) callback();
+      }
+    }, stepTime);
+  }
+
+  function startMusic() {
+    if(started) return;
+    started = true;
+
+    audios.forEach(a => { a.pause(); a.currentTime = 0; });
+
+    let currentAudio = audios[currentIndex];
+    fade(currentAudio, 0, 0.9, fadeDuration); // yavaş aç
+    currentAudio.play().catch(err => console.warn('Autoplay engellendi:', err));
+
+    currentAudio.addEventListener('timeupdate', () => {
+      // parça bitmeden fade-out başlat
+      if(currentAudio.duration && currentAudio.currentTime >= currentAudio.duration - fadeDuration/1000){
+        currentAudio.removeEventListener('timeupdate', arguments.callee);
+        fade(currentAudio, currentAudio.volume, 0, fadeDuration);
+      }
+    });
+
+    currentAudio.addEventListener('ended', playNext);
+
+    function playNext(){
+      currentAudio.removeEventListener('ended', playNext);
+      currentIndex = (currentIndex + 1) % audios.length;
+      currentAudio = audios[currentIndex];
+      currentAudio.currentTime = 0;
+      fade(currentAudio, 0, 0.9, fadeDuration);
+      currentAudio.play().catch(()=>{});
+      currentAudio.addEventListener('timeupdate', () => {
+        if(currentAudio.duration && currentAudio.currentTime >= currentAudio.duration - fadeDuration/1000){
+          currentAudio.removeEventListener('timeupdate', arguments.callee);
+          fade(currentAudio, currentAudio.volume, 0, fadeDuration);
+        }
+      });
+      currentAudio.addEventListener('ended', playNext);
+    }
+  }
+
+  ['click','touchstart','keydown'].forEach(evt => {
+    window.addEventListener(evt, startMusic, { once:true });
+  });
+
+})();
+</script>
+<div id="overlay"></div>
+
+<!-- Audio elementleri -->
+<audio src="public/mp3/indigo night.mp3"></audio>
+<audio src="public/mp3/Raven.mp3"></audio>
+<audio src="public/mp3/yol gozumu dagliyor.mp3"></audio>
+<audio src="public/mp3/cek.mp3"></audio>
+<audio src="public/mp3/neyleyim istanbulu.mp3"></audio>,
+<audio src="public/mp3/exception.mp3"></audio>
+
+<!-- Siyah ekran overlay -->
+<div id="overlay"></div>
+
+<!-- Audio dosyaları -->
+<audio src="public/mp3/indigo night.mp3"></audio>
+<audio src="public/mp3/Raven.mp3"></audio>
+<audio src="public/mp3/yol gozumu dagliyor.mp3"></audio>
+<audio src="public/mp3/cek.mp3"></audio>
+<audio src="public/mp3/neyleyim istanbulu.mp3"></audio>,
+<audio src="public/mp3/exception.mp3"></audio>
+
+</body>
+</html>
+
+      <h1>Happy Birthday</h1>
+      <h3>Bensu'm ♥ </h3>
+
+
+
+
+      
+   </header>
+   <div class="home">
+      <div class="wrapper">
+         <div class="posts">
+            <div class="post target">
+               <h1>Açıklama/Explanation</h1>
+               <img src="public/img/explanation.jpg" alt="content">
+               <p>
+                  🇹🇷 Öncelikle sevdiceğim ve bu siteye tıklayan tüm herkes , aslında ana dilim Türkçe ama sevgim evrensel olduğu için bu yazdıklarımı İngilizce yazıyorum.
+               
+
+
+                  
+               </p>
+               <div class="authorAndDate">
+                  <span></span>
+                  <span>🇪🇳 First of all, my beloved and everyone who visits this site, actually my native language is Turkish, but since my love is universal, I am writing these words in English</span>
+               </div>
+            </div>
+
+
+            <div class="post target">
+               <h1>Happy Birthday My Life</h1>
+               <img src="public/img/gemide sevgilim tek.jpg" alt="content">
+               <p>
+🇹🇷 İkinci olarak söyleyeceğim şey (Bu biraz uzun bir paragraf olacak.) sana olan sevgimin gitgide katlanmasıyla bu günlere gelmemiz. Aslında kimilerine göre az bir süre olmuş, öyle gelmiş olabilir. Hayatımın en güzel aylarını senle yaşadım sevgilim. Hayatıma girdiğinden beri hayatım güzelleşiyor ve bunu hissedebildiğim için sana minnettarım. Hiçbir zaman seninle olmayı düşünmemiştim, ya da aklımın bir köşesinde olsa dahi bunun olabileceğine ihtimal vermiyordum. Sen bu ihtimalleri her şeyinle çürüttün ve bundan dolayı bile sana ne kadar saygı duyduğumu belirtmek isterim. Bugün doğum günün 3 Aralık ve bizim 90. günümüz. 3. ayımız da kutlu olsun, doğum günün de kutlu olsun sevgilim. Hayatımın her evresinde seninle olduğum her an seni el üstünde tutacağıma söz veriyorum, bunu hak ediyorsun ve tanıdığım en iyi insansın. Bunu seninle arkadaş olduğumuz anlarda da farketmiştim, düşüncelerin beni derinden etkiliyordu ve hala etkilemeye devam ediyor. Bunu yazarken maalesef o sevdiğin gözlerim anlamsız sulandı çünkü gerçekten en kötü zamanlarımdan birinde beni yalnız bırakmadın. Bana almış olduğun King Of The Hand'in anlamını kimse bilmeyecek ve bunu seviyorum. Seninle her şey daha anlamlı ve bunu hissettirdiğin için teşekkürler, Taminoyu sevmemi sağlayan kadın! ❤️
+               </p>
+               <div class="authorAndDate">
+                  <span>Secondly — and this will be quite a long paragraph — I want to talk about how my love for you has grown stronger and stronger, bringing us to this very moment. To some, it might seem like we haven’t been together for that long — maybe that’s how it looks from the outside. But to me, these months with you have been the most beautiful of my life, my love. Ever since you came into my life, everything has felt brighter, and I’m so grateful to you for making me feel that way. I never really imagined being with you — and even if the thought had ever crossed my mind, I never believed it could actually happen. Yet you proved every doubt wrong with everything you are, and for that alone, I want to say how deeply I respect you.
+
+Today is December 3rd — your birthday, and also our 90th day together. So, happy birthday and happy third month, my love. I promise that through every stage of my life, for as long as I’m with you, I’ll always cherish and hold you in the highest regard. You deserve that — you’re the best person I’ve ever known. I realized that even back when we were just friends; your thoughts moved me deeply then, and they still do now.
+
+As I write this, my eyes — the ones you love so much — have filled with tears, because you never left me alone during one of the hardest times in my life. The meaning behind the King Of The Hand gift you gave me is something no one else will ever understand — and I love that. Everything feels more meaningful with you. Thank you for making me feel that way — the woman who made me fall in love with Tamino! ❤️</span>
+               </div>
+            </div>
+
+
+            <div class="post target">
+               <h1>Mustache</h1>
+               <img src="public/img/gemi 5.jpg" alt="content">
+               <p>
+🇹🇷 Genel olarak tüm buluşmalarımızda bir gemi geçiyor ve bunu seviyorum, hatırlıyor musun seni Beykoz'dan almaya geldiğimde o günkü heyecanımı? Kalbim hiç düşünmediğim kadar hızlı atıyordu, elini ilk tuttuğum an, ilk sarılışımız. Temastan hoşlanmadığını düşünüyordum, sevdiklerine karşı değilmiş bu düşüncem. Sevgini en derin şekilde hissediyorum, her zaman benimle kalmanı istiyorum ve bunun için çabalayacağıma emin olabilirsin. Aşkım (askim) demeni özellikle seviyorum ama hala alışamadım, her dediğinde heyecanlanıyorum. Beni ben olarak sevebilen, yargılamayan bir kişi olduğun için teşekkürler. Bıyığımı bile sevdiğinden kesmek istemiyorum çünkü zaten senin için uzattım. Evet, arkadaşken bile senin dediğin "yakışıyor" için uzatıyordum. ♥
+               </p>
+               <div class="authorAndDate">
+                  <span>🇪🇳 A ship seems to pass by every time we meet, and I love it. Do you remember how excited I was the day I came to pick you up from Beykoz? My heart was racing faster than I ever thought it could. The moment I held your hand for the first time, our first embrace — I’ll never forget them. I used to think you didn’t like physical touch, but I realized that wasn’t true when it came to the people you love. I can feel your love so deeply, and I want you to know that I’ll always do my best to make sure you stay by my side. I especially love it when you call me askim — though I still haven’t gotten used to it; every time you say it, my heart skips a beat. Thank you for being someone who loves me as I am, without judgment. I don’t even want to shave my mustache anymore, because you love it — and honestly, I grew it for you in the first place. Even back when we were just friends, I kept it because you once said it “looked good” on me. ♥</span>
+               </div>
+            </div>
+            <div class="post target">
+               <h1>Waffle</h1>
+               <img src="public/img/wafflecı.jpg" alt="content">
+               <p>
+                  🇹🇷 Hiç aklında yokken , bir ışık yanar.
+                   <p> 🇪🇳 When you least expect it, a light turns on.</p>
+                  
+               </p>
+               <div class="authorAndDate">
+                  <span></span>
+                  <span>   </span>
+               </div>
+            </div>
+
+            <div class="post target">
+              
+               <h1>The first day we became a couple.</h1>
+               <img src="public/img/gemi 1.jpg" alt="content">
+               <p>
+                  Şimdi şuna açıklık getirmem gerekiyor , günlük tutmak asla ama asla devam ettirebildiğim bir şey değildi. Bunu da sağladın. İlk günümüz adına ne yazdığımı görmek ister misin? Biliyorum istersin.
+
+               </p>
+               <div class="authorAndDate">
+                  <span>Hayatımın belki de en güzel gününün başlangıcıydı. Her zerrem her zerresine aşık ve bunu hayatsal bağ olarak farkedebiliyorum. Hand of the kingi bana verdiğinden beri zaten ona karşı ayrı bir zaafım var ve bugün daha az önce videoları izledikten sonra anladım ki bu kadınla hayatımı geçirmek istiyorum. Beni güldürmesi dahi gözlerinin ışıldamasını sağlıyor ve ben o gözlere deliler gibi aşığım. Belki biraz geç ve güç oldu ama bir öneminin olduğunu düşünmüyorum. Sabah metroda daha güzel bir zamanda verebilirdim çiçeği o da benim eşşeklik ne diyelim. Birlikte sarı laleler ve Tamino dinlemek mi , dostum onunla her şeyi yapmak istiyorum.Göğsüne yattığımda kalbinin hızlanmasını dahi ya. Anlatmaya kelimelerim yetmiyor bugünü. Sevdiğim bir şiirle kapatmak istiyorum ama eminim ki şuan yazmak istediğim onlarca şeyi yaşayarak ve onun güzelliğinin tadını çıkararak devam ettirmek istiyorum. 
+
+<p>yine güzel bir gece istiyorum<p>
+
+</p>
+şarap, müzik ve sen.
+<p>
+
+yemek mi?
+</p>
+dert etme, ben sana yaparım.
+</p>
+önce şarap,
+</p>
+sonra yemek,
+</p>
+tekrar şarap,
+</p>
+sonra müzik, önce müzik, hep müzik...
+</p>
+ve gözlerin. 
+</p>
+
+(devamı da var da , utanırım böyle şeylere.)
+</p>
+
+<p></p>
+
+<div class="post target">
+  <span>
+    It was perhaps the beginning of the most beautiful day of my life. Every part of me is in love with every part of you, and I can feel it as a vital connection. Ever since you gave me the Hand of the King, I’ve had a special weakness for you, and just a moment ago, after watching the videos, I realized that I want to spend my life with this woman. Even making me laugh makes your eyes shine, and I am madly in love with those eyes. Maybe it’s a little late and difficult, but I don’t think it matters. I could have given the flower at a better time on the metro, but that’s my foolishness, what can I say. Yellow tulips together and listening to Tamino? Dude, I want to do everything with her. Even when I lay on her chest, my heart races. Words cannot describe this day. I want to end it with a poem I love, but I’m sure that what I really want to do right now is continue experiencing dozens of things while enjoying her beauty.
+  </span>
+
+  <p>I want another beautiful night.</p>
+  <p>Wine, music, and you.</p>
+  <p>Food? Don’t worry, I’ll make it for you.</p>
+  <p>First wine, then food, wine again, then music — first music, always music...</p>
+  <p>And your eyes.</p>
+  <p>(There’s more, but I’m embarrassed by such things.)</p>
+  <p>04.09.2025</p>
+</div>
+
+
+
+
+            <div class="post target">
+               <h1>Bluetooth.</h1>
+               <img src="public/img/starbuckcs 2.jpeg" alt="content">
+               <p>
+                  Bana bunu söylediğinde devam ettirmiştim zaten günlük tutmaya. O gün sen de günlük tutmuşsun. Bir gün okumak dileğiyle sevgilim (Bir yeri çıkardım yazdığım şeyden okumak ya da öğrenmek istersen yaz bana manitam.)
+</p>
+
+
+<p>Aynı şeyi yapmamız çok garip , sen de dün için günlük yazmışsın ve ben de yazdım , ki günlük tutmayı pek sevmem ama senin için bunu devam ettirmeye çalışacağım.Fotoğraflarımıza bakıp nası olduğumuzu düşünüp duruyorum bu arada , çok ciddi konuşuyorum şu iki gündür ama garip yazmak bile geçmiyor içimden. Sims hayatımızın gerçek olmasını diliyorum.
+
+</p> 
+
+<p>Anneannene katılıyorum , çok güzelsin.</p>
+
+<p>
+</p>
+
+
+
+<p>It’s so strange that we did the same thing — you wrote a diary entry about yesterday, and so did I. I’m not really the type who enjoys keeping a journal, but I’ll try to keep doing it for you. By the way, I keep looking at our photos and thinking about how we were back then. I’ve been talking so seriously these past two days, and weirdly, I don’t even feel like writing. I wish our Sims life were real.</p> <p>I agree with your grandma — you’re so beautiful.</p> <p>05.09.2025</p>
+               <div class="authorAndDate">
+                  <span></span>
+               </div>
+            </div>
+
+
+
+
+
+
+
+
+                        <div class="post target">
+               <h1>B-Pizza</h1>
+               <img src="public/img/pizza.jpg" alt="content">
+<p> 🇹🇷 Sevgiliyken yediğimiz ilk yemek.</p>
+<p> 🇪🇳  The first meal we had as a couple.</p>
+               <div class="authorAndDate">
+                  <span></span>
+               </div>
+            </div>
+
+
+
+                        <div class="post target">
+               <h1>I LOVE YOU :3 </h1>
+               <img src="public/img/yuzumu siktigi foto.jpg" alt="content">
+               <p> 
+                 🇹🇷 Siz hiç , 6 saati 10 dakika gibi hissettiren biriyle vakit geçirdiniz mi?
+               </p>
+<p>Sonra yanınızdan ayrıldığı an onu özlediniz mi?</p>
+<p>Ben özledim.</p>
+
+
+<p>🇪🇳 Have you ever spent time with someone who made six hours feel like ten minutes?</p>  
+<p>And then, the moment they left, did you miss them?</p>  
+<p>I did.</p>
+<p>16.09.2025</p>
+<div class="footerResimKapsayici">
+  <img src="public/img/besiktas.jpeg" class="footerBulanikResim">
+  <div class="footerYaziKapsayici">
+    <div class="footerResimYazisi">
+      <p>Son kez selam manitam. Tekrardan annene sonsuz şükranlarımı sunuyorum. Senin gibi birini 3 Aralık 22.13'de doğurduğu için. Bilmiyorum seninle daha neler yapacağız ama hepsi için sabırsızlanıyorum. Hayatımı güzelleştirdiğin için bu WEB sitesi sana olan sevgimin ufak da olsa bir kanıtı. Yurtta yazmaya başladım daha 2 ay öncesinden belliydi bunu yapma isteğim. Devam da etti ve bunu açtığında yüksek ihtimalle saat 00:00 olacak. Belki uyuyakalmış olursun, kim bilir.</p>
+
+      <p>İlk konuştuğumuz ya da sevgili olmadan önceki o buluşmamızı hatırlamamak elde değil , Cerenle bana bakıp gülüştüğünüz o saçma gün. Sana çimenden yapmış olduğum o ottan bilekliği saklaman bile seni benimle yakınlaştıran yegane şeylerden biri olmuştu. Sen benim dayanağım , sırdaşım , arkadaşım oldun.</p>
+
+      <p>Her zorlu şeyi birlikte atlatacağımız günlerin de geleceğini biliyorum ama bir sarılma ve kucaklaşmayla bunun geçeceğini de biliyorum.</p>
+
+      <p>Geleceğe seninle bakmayı, seninle yaşamayı ve en çok da seninle anılar biriktirebilmek için sabırsızlanıyorum.</p>
+
+      <p>Belki de Eren abiyle daha sık görüştüğümüz günleri görmeyi de istiyorum. İşin özü, hayatımın bir temeli olacaksa bu temelde rol oynaman beni mutlu eder. Seninle geçirdiğim her anın benim için bir hediye olduğunu biliyorum ve bu hediyeleri uzunca bir süre almayı diliyorum.</p>
+
+      <p>Seni destekleyip, sana inanmayanlara rağmen seni tüm kalbimle sevmeye söz veriyorum (asla söz vermeyi sevmem ama hayatımda sana söz vermeyeceksem kime söz vereceğimi bilmiyorum.)</p>
+
+      <p>Gitarıma, bıyıklarıma, kısacası hayatıma ışık olduğun için teşekkür ederim. İyi ki varsın.♥♥♥♥♥</p>
+    </div>
+  </div>
+</div>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500&family=Playfair+Display:wght@500;700&display=swap');
+
+.footerResimKapsayici {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 0;
+  background: #000;
+}
+
+.footerBulanikResim {
+  width: 100%;
+  height: auto;
+  max-height: 90vh;
+  object-fit: cover;
+  filter: brightness(1.05) contrast(1.15) blur(5px);
+  z-index: 1;
+}
+
+.footerYaziKapsayici {
+  position: absolute;
+  z-index: 2;
+  text-align: center;
+  width: 90%;
+  max-width: 1000px;
+  padding: 20px;
+}
+
+.footerResimYazisi {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 2vw; /* ekran boyutuna göre font büyüklüğü */
+  line-height: 1.6;
+  font-weight: 500;
+  color: #0ab60a;
+  text-shadow: 0 0 8px rgba(0,0,0,0.9);
+  background: rgba(0,0,0,0.35);
+  border-radius: 15px;
+  padding: 20px 25px;
+  overflow-wrap: break-word;
+}
+
+/* Responsive yazı boyutu ve kutu ayarı */
+@media (max-width: 768px) {
+  .footerResimYazisi {
+    font-size: 4vw; /* küçük ekranlarda daha büyük font */
+    line-height: 1.5;
+    padding: 15px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .footerResimYazisi {
+    font-size: 5vw;
+    line-height: 1.4;
+    padding: 12px 15px;
+  }
+}
+</style>
+
+</style>
+
+               <div class="authorAndDate">
+                  <span></span>
+               </div>
+            </div>
+</span>
+                  <span></span>
+               </div>
+            </div>
+         </div>
+
+         <div class="sidebar">
+            <div class="area target">
+               <h3>My babe</h3>
+               <img src="public/img/cerenle oldugumuz gun.jpg" alt="user">
+               <div class="categories">
+                  <span>i</span>
+                  <span> ♥ </span>
+                  <span>you </span>
+               </div>
+            </div>
+   <script src="public/js/search.js"></script>
+   <script src="public/js/scroll.js"></script>
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
