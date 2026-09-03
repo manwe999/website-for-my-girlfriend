@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title></title>
 
     <style>
@@ -12,35 +13,89 @@
             box-sizing: border-box;
         }
 
-        body {
-            width: 100vw;
-            height: 100vh;
+        html, body {
+            width: 100%;
+            min-height: 100%;
             background-color: #000;
+        }
+
+        body {
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
+            overflow-y: auto;
+            padding: 30px 20px 60px;
         }
 
         .yazi {
+            width: 100%;
+            max-width: 750px;
+
             color: #fff;
             font-family: Arial, sans-serif;
-            font-size: 22px;
+            font-size: 21px;
             font-weight: 300;
+
             text-align: center;
-            max-width: 700px;
-            padding: 30px;
             line-height: 1.7;
+
+            padding: 20px;
+        }
+
+        .yazi a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .yazi a:hover {
+            opacity: 0.6;
         }
 
         .tarih {
             position: fixed;
             right: 20px;
             bottom: 15px;
+
             color: #555;
             font-family: Arial, sans-serif;
             font-size: 13px;
             font-weight: 300;
+        }
+
+        /* TELEFON */
+        @media (max-width: 600px) {
+
+            body {
+                padding: 25px 15px 55px;
+            }
+
+            .yazi {
+                max-width: 100%;
+                padding: 10px 5px;
+
+                font-size: 16px;
+                line-height: 1.65;
+            }
+
+            .tarih {
+                right: 12px;
+                bottom: 10px;
+                font-size: 10px;
+            }
+        }
+
+        /* ÇOK KÜÇÜK TELEFONLAR */
+        @media (max-width: 380px) {
+
+            .yazi {
+                font-size: 15px;
+                line-height: 1.6;
+            }
+
+            .tarih {
+                font-size: 9px;
+            }
         }
     </style>
 </head>
@@ -48,7 +103,27 @@
 <body>
 
     <div class="yazi">
-        buraya benden başka uğrayan yok zaten. saygılar. o zaman bunları söyleyecek mentalde değildim. anlam verememiştim. kusura bakma, yanlışlarım için affola. her şey için teşekkürler. en güzel anılarımı zamanında yaşattığın için teşekkürler , hayatıma ışık olduğun için teşekkürler. bir çok şey için teşekkür ederim. varlığın bana çok iyi gelmişti , ne yalan söyleyeyim çok uzun süre gideceğini düşünüyordum. nasip değilmiş. belki de hayatımda senden sonra yaşadığım şeylerde yanımda olmamalıymışsın. bilmiyorum. hayatın güzel olsun. saygılar. ve son kez. <a href="https://www.youtube.com/watch?v=MWFAX07pLdo&list=RDMWFAX07pLdo&start_radio=1" target="_blank"> :) </p> birinci yılımız kutlu olsun. </a> 
+
+        buraya benden başka uğrayan yok zaten. saygılar.
+        o zaman bunları söyleyecek mentalde değildim. anlam verememiştim.
+        kusura bakma, yanlışlarım için affola.
+        her şey için teşekkürler.
+        en güzel anılarımı zamanında yaşattığın için teşekkürler,
+        hayatıma ışık olduğun için teşekkürler.
+        bir çok şey için teşekkür ederim.
+        varlığın bana çok iyi gelmişti,
+        ne yalan söyleyeyim çok uzun süre gideceğini düşünüyordum.
+        nasip değilmiş.
+        belki de hayatımda senden sonra yaşadığım şeylerde yanımda olmamalıymışsın.
+        bilmiyorum.
+        hayatın güzel olsun.
+        saygılar.
+
+        ve son kez.
+        <a href="https://www.youtube.com/watch?v=MWFAX07pLdo&list=RDMWFAX07pLdo&start_radio=1" target="_blank" rel="noopener noreferrer">:)</a>
+
+        birinci yılımız kutlu olsun.
+
     </div>
 
     <div class="tarih">
